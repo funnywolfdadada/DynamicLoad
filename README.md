@@ -1,2 +1,2 @@
-# DynamicLoad
+# DynamicLoading
 学习一下插件化相关技术......
