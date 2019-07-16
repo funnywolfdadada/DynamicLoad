@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">plugin</string>
+    <string name="plugin_show_text">I`m from plugin</string>
+</resources>
