@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         }
         try {
             PackageInfo packageInfo = getPackageManager().getPackageArchiveInfo(pluginPath, PackageManager.GET_ACTIVITIES);
-            AssetManager assetManager = AssetManager.class.newInstance();
+            Resources resources = getPackageManager().getResourcesForApplication(packageInfo.applicationInfo);
+            AssetManager assetManager = resources.getAssets();
             AssetManager.class.getDeclaredMethod("addAssetPath", String.class)
                     .invoke(assetManager, pluginPath);
-            Resources resources = new Resources(assetManager, getResources().getDisplayMetrics(), getResources().getConfiguration());
             int textId = resources.getIdentifier("plugin_show_text", "string", packageInfo.packageName);
             int imageId = resources.getIdentifier("plugin_image", "drawable", packageInfo.packageName);
             textView.setText(resources.getText(textId));
