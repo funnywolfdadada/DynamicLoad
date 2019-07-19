@@ -5,6 +5,8 @@
 
 [DL动态加载框架技术文档](https://blog.csdn.net/singwhatiwanna/article/details/40283117)  
 
+[插件化中 Classloader 的加载 dex 分析](http://solart.cc/2016/11/16/plugin_classloader/)
+
 [VirtualApk 资源处理](https://www.notion.so/VirtualAPK-1fce1a910c424937acde9528d2acd537)  
 
 [RePlugin FAQ（这个很有用）](https://github.com/Qihoo360/RePlugin/wiki/FAQ)  
