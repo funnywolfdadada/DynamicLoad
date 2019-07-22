@@ -9,6 +9,8 @@
 
 [VirtualApk 资源处理](https://www.notion.so/VirtualAPK-1fce1a910c424937acde9528d2acd537)  
 
+[Android 全面插件化 RePlugin 流程与源码解析](https://juejin.im/post/59752eb1f265da6c3f70eed9#heading-1)  
+
 [RePlugin FAQ（这个很有用）](https://github.com/Qihoo360/RePlugin/wiki/FAQ)  
 
 
