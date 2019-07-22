@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">host</string>
+    <string name="host_text">I`m from host!</string>
 </resources>

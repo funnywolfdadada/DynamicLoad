@@ -6,6 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:text="@string/plugin_bar_text"
+        android:textSize="22sp"
+        android:textColor="#FFFF"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/load_self_res"
         android:text="加载自己的资源"
@@ -15,16 +24,8 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/load_foo_res"
-        android:text="加载插件 foo 的资源"
-        android:textSize="22sp"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/load_bar_res"
-        android:text="加载插件 bar 的资源"
+        android:id="@+id/access_host_func"
+        android:text="调用宿主的方法"
         android:textSize="22sp"
         android:padding="10dp"
         android:layout_width="match_parent"
@@ -33,30 +34,6 @@
     <Button
         android:id="@+id/access_foo_func"
         android:text="调用插件 foo 的方法"
-        android:textSize="22sp"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/access_bar_func"
-        android:text="调用插件 bar 的方法"
-        android:textSize="22sp"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/start_foo"
-        android:text="启动 foo 的页面"
-        android:textSize="22sp"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/start_bar"
-        android:text="启动 bar 的页面"
         android:textSize="22sp"
         android:padding="10dp"
         android:layout_width="match_parent"

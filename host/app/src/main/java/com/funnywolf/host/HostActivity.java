@@ -1,7 +1,6 @@
 package com.funnywolf.host;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -11,27 +10,25 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.FrameLayout;
 
-import dalvik.system.DexClassLoader;
-
 public class HostActivity extends AppCompatActivity {
     private static final String TAG = "HostActivity";
 
-    public static final String EXTRA_PLUGIN_PATH = "EXTRA_PLUGIN_PATH";
+    public static final String EXTRA_PLUGIN_NAME = "EXTRA_PLUGIN_NAME";
     public static final String EXTRA_FRAGMENT_NAME = "EXTRA_FRAGMENT_NAME";
     public static final int LAYOUT_ID = HostActivity.class.hashCode();
 
-    private DexClassLoader dexClassLoader;
+    private ClassLoader classLoader;
     private AssetManager assetManager;
     private Resources resources;
 
-    public static void start(Activity activity, String pluginPath, String fragmentName) {
+    public static void start(Activity activity, String pluginName, String fragmentName) {
         if (activity == null
-                || TextUtils.isEmpty(pluginPath)
+                || TextUtils.isEmpty(pluginName)
                 || TextUtils.isEmpty(fragmentName)) {
             return;
         }
         Intent intent = new Intent(activity, HostActivity.class);
-        intent.putExtra(EXTRA_PLUGIN_PATH, pluginPath);
+        intent.putExtra(EXTRA_PLUGIN_NAME, pluginName);
         intent.putExtra(EXTRA_FRAGMENT_NAME, fragmentName);
         activity.startActivity(intent);
     }
@@ -41,26 +38,23 @@ public class HostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        String pluginPath = intent.getStringExtra(EXTRA_PLUGIN_PATH);
+        String pluginName = intent.getStringExtra(EXTRA_PLUGIN_NAME);
         String fragmentName = intent.getStringExtra(EXTRA_FRAGMENT_NAME);
-        if (TextUtils.isEmpty(pluginPath) || TextUtils.isEmpty(fragmentName)) {
+        PluginManager.PluginInfo pluginInfo = PluginManager.getPlugin(pluginName);
+        if (TextUtils.isEmpty(pluginName) || TextUtils.isEmpty(fragmentName) || pluginInfo == null) {
             finish();
             return;
         }
+        classLoader = pluginInfo.classLoader;
+        assetManager = pluginInfo.resources.getAssets();
+        resources = pluginInfo.resources;
 
         FrameLayout frameLayout = new FrameLayout(this);
         frameLayout.setId(LAYOUT_ID);
         setContentView(frameLayout);
 
         try {
-            dexClassLoader = new DexClassLoader(pluginPath, getDir("dex", Context.MODE_PRIVATE).getAbsolutePath(),
-                    null, getClassLoader());
-            assetManager = AssetManager.class.newInstance();
-            AssetManager.class.getDeclaredMethod("addAssetPath", String.class)
-                    .invoke(assetManager, pluginPath);
-            resources = new Resources(assetManager, getResources().getDisplayMetrics(), getResources().getConfiguration());
-
-            Fragment fragment = (Fragment) dexClassLoader.loadClass(fragmentName).newInstance();
+            Fragment fragment = (Fragment) classLoader.loadClass(fragmentName).newInstance();
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(LAYOUT_ID, fragment)
@@ -73,7 +67,7 @@ public class HostActivity extends AppCompatActivity {
 
     @Override
     public ClassLoader getClassLoader() {
-        return dexClassLoader != null ? dexClassLoader : super.getClassLoader();
+        return classLoader != null ? classLoader : super.getClassLoader();
     }
 
     @Override
